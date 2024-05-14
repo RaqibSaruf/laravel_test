@@ -20,17 +20,18 @@ class Withdrawal implements TransactionInterface
       $transaction = new Transaction();
       $user = Auth::user();
       $amount = $request->validated('amount');
+      $fee =  $this->getWithdrawalfee($user->account_type, $amount);
       $data = [
         ...$request->validated(),
         'user_id' => $user->id,
         'date' => date('Y-m-d'),
-        'fee' => $this->getWithdrawalfee($user->account_type, $amount)
+        'fee' => $fee
       ];
 
       $transaction->fill($data)->save();
 
       $user->update([
-        'balance' => $user->balance + $amount
+        'balance' => $user->balance - $amount - $fee
       ]);
 
       return $transaction;
