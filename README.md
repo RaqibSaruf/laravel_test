@@ -8,4 +8,4 @@
 
 # run `npm run build`
 
-## Run the project
+## Run the project by `php artisan serve`
