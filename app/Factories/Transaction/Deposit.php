@@ -7,6 +7,7 @@ namespace App\Factories\Transaction;
 use App\Factories\Transaction\TransactionInterface;
 use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
@@ -21,7 +22,7 @@ class Deposit implements TransactionInterface
       $data = [
         ...$request->validated(),
         'user_id' => $user->id,
-        'date' => date('Y-m-d')
+        'date' => Carbon::today()->toDateString(),
       ];
       $transaction->fill($data)->save();
 
